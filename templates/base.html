@@ -1,0 +1,41 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}Edu{% endblock %}</title>
+</head>
+<body class="bg-primary bg-opacity-10">
+<nav class="navbar navbar-light bg-gradient rounded-1 bg-primary bg-opacity-75">
+  <div class="container">
+    <a class="navbar-brand" href="/">Navbar</a>
+      <ul class="navbar-nav">
+        {% if request.user.is_authenticated %}
+            <li class=""><a class="btn btn-outline-light" href="{% url "logout" %}">Выйти</a></li>
+        {% else %}
+            <li class=""><a class="btn btn-outline-light" href="{% url "login" %}">Войти</a></li>
+        {% endif %}
+    </ul>
+  </div>
+
+
+</nav>
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function () {
+        {% block domready %}
+        {% endblock %}
+    });
+</script>
+</body>
+</html>

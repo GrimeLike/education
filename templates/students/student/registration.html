@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% bootstrap_form %}
+{% block title %}
+    Регистрация
+{% endblock %}
+{% block content %}
+    <h1 class="text-center mt-4">
+        Регистрация
+    </h1>
+    <div class="mx-4">
+        <form action="" method="post">
+            {% bootstrap_form form %}
+            {% csrf_token %}
+            <p class="d-grid"><input class="btn btn-primary" type="submit" value="Создать аккаунт"></p>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Мои курсы{% endblock %}
+{% block content %}
+    <h1 class="my-4 text-center">Мои курсы</h1>
+        {% for course in object_list %}
+            <div class="d-flex row my-4">
+                <button class="btn col-9 bg-primary bg-opacity-25 py-3 text-start ps-4">{{ course.title }}</button>
+                <a class="btn btn-primary col-3 py-3" href="{% url "student_course_detail" course.id %}">Перейти к содержимому курса</a>
+            </div>
+        {% empty %}
+            <p>
+                Вы не подключены ни к одному курсу!
+                <a href="{% url "course_list" %}">Обзор курсов.</a>
+                to enroll in a course.
+            </p>
+
+        {% endfor %}
+{% endblock %}

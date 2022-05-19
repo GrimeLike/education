@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}My courses{% endblock %}
+{% block content %}
+    <h1>Мои курсы</h1>
+    <p class="d-grid">
+            <a href="{% url "course_create" %}" class="btn btn-primary my-5">Создать новый курс</a>
+        </p>
+    <div>
+        {% for course in object_list %}
+            <div>
+                <h3>{{ course.title }}</h3>
+                <p class="row d-flex">
+                    <a class="btn col-3 btn-success" href="{% url "course_edit" course.id %}">Изменить курс</a>
+                    <a class="btn btn-danger col-3" href="{% url "course_delete" course.id %}">Удалить курс</a>
+                    <a class="btn col-3 btn-primary" href="{% url "course_module_update" course.id %}">Изменить модули</a>
+                    {% if course.modules.count > 0 %}
+                    <a class="btn col-3 btn-secondary" href="{% url "module_content_list" course.modules.first.id %}">Добавить контент</a>
+                    {% endif %}
+                </p>
+            </div>
+        {% empty %}
+            <p>You haven't created any courses yet.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

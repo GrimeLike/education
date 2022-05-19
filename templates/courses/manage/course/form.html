@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% bootstrap_form %}
+{% block title %}
+    {% if object %}
+        Изменить курс "{{ object.title }}"
+    {% else %}
+        Создать новый курс
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <h1 class="text-center my-4">
+        {% if object %}
+            Изменить курс "{{ object.title }}"
+        {% else %}
+            Создать новый курс
+        {% endif %}
+    </h1>
+    <hr/>
+        <form action="." method="post">
+            {% bootstrap_form form %}
+            {% csrf_token %}
+            <p class="d-grid"><input class="btn btn-primary" type="submit" value="Сохранить курс"></p>
+        </form>
+{% endblock %}

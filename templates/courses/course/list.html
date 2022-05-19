@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}
+    {% if subject %}
+        {{ subject.title }}
+    {% else %}
+        Все курсы
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="py-4">
+        <h3 class="text-center">Категории</h3>
+        <div class="list-group">
+            <a href="{% url "course_list" %}"
+               class="list-group-item list-group-item-action position-relative {% if not subject %}active{% endif %}"
+               aria-current="true">Все</a>
+            {% for s in subjects %}
+                <a href="{% url "course_list_subject" s.slug %}"
+                   class="list-group-item list-group-item-action {% if subject == s %}active{% endif %}"
+                   aria-current="true">{{ s.title }}
+                    <span class="position-absolute top-50 start-100 translate-middle badge rounded-pill bg-danger">{{ s.total_courses }} курса</span></a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row w-100 m-auto">
+        {% for course in courses %}
+            {% with subject=course.subject %}
+                <div class="col-md-6 p-3">
+                    <div class="card p-4">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ course.title }}</h5>
+                            <hr/>
+                            <p class="card-text">
+                            <p>{{ subject }}</p>
+                            <p>Количество модулей: {{ course.total_modules }}</p>
+                            <p>Курс создал: {{ course.owner.get_full_name }}</p>
+                            </p>
+                            <p class="d-grid"><a href="{% url "course_detail" course.slug %}" class="btn btn-primary">Обзор курса</a></p>
+                        </div>
+                    </div>
+                </div>
+            {% endwith %}
+        {% endfor %}
+    </div>
+{% endblock %}

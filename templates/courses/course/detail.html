@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ object.title }}
+{% endblock %}
+{% block content %}
+    {% with subject=course.subject %}
+        <main class="p-5 my-5 d-flex h-auto w-50 flex-column mx-auto shadow">
+            <h1 class="text-center pb-3">Обзор курса {{ object.title }}</h1>
+            <p>Категория: <a class="btn p-1 btn-primary"
+                             href="{% url "course_list_subject" subject.slug %}">{{ subject.title }}</a></p>
+            <p>Instructor: {{ course.owner.get_full_name }}</p>
+            <p class="lead">{{ object.overview|linebreaks }}</p>
+            <p class="lead text-center">
+                {% if request.user.is_authenticated %}
+                    <form action="{% url "student_enroll_course" %}" method="post">
+                        {{ enroll_form }}
+                        {% csrf_token %}
+                        <div class="d-grid">
+                            <input type="submit" class="btn btn-lg btn-primary fw-bold border-white"
+                                   value="Начать сейчас">
+                        </div>
+                    </form>
+                {% else %}
+                    <div class="d-grid">
+                        <a href="{% url "student_registration" %}" class="btn btn-primary">
+                            Зарегестрируйтесь чтобы продолжить
+                        </a>
+                    </div>
+                {% endif %}
+            </p>
+        </main>
+    {% endwith %}
+{% endblock %}
